@@ -9,15 +9,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Проверка наличия userId
         if (!userId) {
             console.log("User ID not found, redirecting to bot...");
-            window.location.replace("https://t.me/TestKeys002bot");
+            window.location.replace("https://t.me/MrROBOT_helper_bot");
             return;
         }
 
         // Загрузка базы данных
-        const response = await fetch('https://keys002.pages.dev/userp.db'); // Убедитесь, что путь правильный
+        const response = await fetch('https://mrrobotkeys.pages.dev/userp.db'); // Убедитесь, что путь правильный
         if (!response.ok) {
             console.log("Failed to load database, redirecting to bot...");
-            window.location.replace("https://t.me/TestKeys002bot");
+            window.location.replace("https://t.me/MrROBOT_helper_bot");
             return;
         }
 

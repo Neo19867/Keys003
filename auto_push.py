@@ -4,7 +4,7 @@ from datetime import datetime
 import time
 
 # Определите путь к вашему проекту
-project_path = "D:/GIT/Keys002"
+project_path = "D:/GIT/Keys003"
 
 # Переходите в директорию проекта
 os.chdir(project_path)
