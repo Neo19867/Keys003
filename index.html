@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster Key Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            background: black;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Стиль контейнера */
+        .container {
+            position: relative;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.4); /* Прозрачный черный фон */
+            color: #00ff00; /* Зеленый цвет текста */
+        }
+
+        /* Стиль для кнопок */
+        .button, .restart-button, #startBtn, #generateMoreBtn, #copyAllBtn, #sourceCode {
+            display: inline-block;
+            background-color: #00ff00;
+            color: black; /* Цвет текста для кнопок по умолчанию */
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .button:hover, .restart-button:hover, #startBtn:hover, #generateMoreBtn:hover, #copyAllBtn:hover, #sourceCode:hover {
+            background-color: #00cc00;
+        }
+
+        /* Специфический стиль для кнопки Telegram */
+        #sourceCode {
+            color: #00ff00; /* Зеленый цвет текста для кнопки Telegram */
+            background-color: transparent; /* Прозрачный фон, чтобы текст выделялся */
+            border: 1px solid #00ff00; /* Зеленая граница */
+            box-shadow: none; /* Убираем тень для кнопки Telegram */
+        }
+
+        #sourceCode:hover {
+            background-color: #00cc00; /* Изменяем фон при наведении для кнопки Telegram */
+        }
+
+       /* Стиль для отображения ключей */
+#keysList {
+    color: #00ff00; /* Зеленый цвет текста для кодов */
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.4); /* Прозрачный черный фон для списка ключей */
+    padding: 10px;
+    border-radius: 8px;
+    overflow-y: auto; /* Прокрутка, если ключей много */
+}
+
+.key-item {
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.4); /* Прозрачный черный фон для отдельных ключей */
+    color: #00ff00; /* Зеленый цвет текста для ключей */
+}
+
+
+/* Эффект матрицы для ключей */
+@keyframes matrixEffect {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+
+        /* Эффект матрицы */
+        .matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: black;
+            overflow: hidden;
+        }
+
+        .matrix canvas {
+            display: block;
+        }
+
+        /* Дополнительные стили */
+        h1 {
+            text-align: center;
+            color: #00ff00;
+        }
+
+        #underscore {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .footer p, .footer a {
+            color: #00ff00;
+        }
+
+        .game-option p {
+            color: #00ff00; /* Зеленый цвет для текста названий игр */
+        }
+
+        /* Стиль прогресс-бара в стиле Матрицы */
+        .progress-bar {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        #progressBar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: #00ff00;
+            width: 0%;
+            font-family: 'Roboto', sans-serif;
+            color: black;
+            font-size: 14px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        /* Псевдоэлемент для имитации эффекта "разгадывания" */
+        #progressBar::before {
+            content: '@MrROBOTcommunityRUS';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff00;
+            text-align: center;
+            line-height: 30px;
+            font-size: 16px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #progressBar[data-progress="100"]::before {
+            display: none;
+        }
+
+        /* Стиль для выбора количества ключей */
+        #keyCountSelect {
+            color: #00ff00; /* Зеленый цвет текста для выбора количества ключей */
+            background-color: rgba(0, 0, 0, 0.4); /* Прозрачный черный фон */
+            border: 1px solid #00ff00; /* Зеленая граница */
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #keyRange {
+            -webkit-appearance: none;
+            appearance: none;
+            background: #00ff00;
+            height: 8px;
+            border-radius: 5px;
+            outline: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        #keyRange::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            background: black;
+            border: 2px solid #00ff00;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #keyValue {
+            color: #00ff00; /* Зеленый цвет для значения выбора количества ключей */
+        }
+		/* Стиль для модального окна */
+.modal {
+    display: none; /* Изначально окно скрыто */
+    position: fixed; 
+    z-index: 1000; /* Обеспечивает отображение модального окна поверх всего */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+    max-width: 90%; /* Максимальная ширина не больше 90% контейнера */
+    width: 100%; /* Окно займет 100% ширины контейнера, но не больше max-width */
+    box-sizing: border-box;
+}
+
+/* Стиль для кнопки закрытия модального окна */
+.modal button {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #00ff00;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.modal button:hover {
+    background-color: #00cc00;
+}
+
+#blackScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: #00ff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#messageContainer {
+    text-align: center;
+}
+
+#messageText a {
+    color: #00ff00;
+    text-decoration: none;
+}
+
+#messageText a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Элемент для эффекта матрицы -->
+    <div class="matrix">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+
+    <!-- Контейнер с вашим контентом -->
+    <div class="container">
+	<!-- Модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>Внимательно прочтите!!!</h2>
+    <p>Выберите игру, количество ключей и нажмите <strong>Generate Keys</strong>.</p>
+    <p>Ждите <strong>5-30 минут</strong>.</p>
+    <p>Ожидание зависит от задержки, которая требуется для получения ключей.</p>
+    <p>Для некоторых игр она <strong>20-30 секунд</strong>, для некоторых <strong>120-180 секунд</strong>.</p>
+    <p>Если шкала прогресса после запуска сразу заполнилась, <strong>ЭТО ОШИБКА!</strong> Перезапустите процесс.</p>
+    <p>Если шкала прогресса долго не двигается (более 5 минут), перезапустите процесс.</p>
+    <p>Скорость не зависит от количества ключей, которые вы желаете получить, хотя вам может и показаться, что это не так.</p>
+        <button id="closeModalBtn" class="button">OK</button>
+    </div>
+</div>
+        <h1 id="status">Getting keys<span id="underscore">_</span></h1>
+        <div id="gameSelectContainer" class="grid-container">
+            <div class="game-option" data-game="9">
+                <img src="https://cdn.hamsterkombat.io/mud_racing/image.webp" alt="Mud Racing">
+                <p>Mud Racing</p>
+            </div>
+            <div class="game-option" data-game="8">
+                <img src="https://cdn.hamsterkombat.io/mow_trim/image.webp" alt="Mow and Trim">
+                <p>Mow and Trim</p>
+            </div>
+            <div class="game-option" data-game="7">
+                <img src="https://cdn.hamsterkombat.io/polysphere/image.webp" alt="Polysphere">
+                <p>Polysphere</p>
+            </div>
+            <div class="game-option" data-game="6">
+                <img src="https://cdn.hamsterkombat.io/twerk/image.webp" alt="Twerk Race 3D">
+                <p>Twerk Race 3D</p>
+            </div>
+            <div class="game-option" data-game="5">
+                <img src="https://cdn.hamsterkombat.io/merge_away/image.webp" alt="Merge Away">
+                <p>Merge Away</p>
+            </div>
+            <div class="game-option" data-game="2">
+                <img src="https://cdn.hamsterkombat.io/chain_cube/image.webp" alt="Chain Cube 2048">
+                <p>Chain Cube 2048</p>
+            </div>
+            <div class="game-option" data-game="4">
+                <img src="https://cdn.hamsterkombat.io/train_miner/image.webp" alt="Train Miner">
+                <p>Train Miner</p>
+            </div>
+            <div class="game-option" data-game="1">
+                <img src="https://cdn.hamsterkombat.io/bikeride/image.webp" alt="Bike Ride 3D">
+                <p>Bike Ride 3D</p>
+            </div>
+			<div class="game-option">
+				<a href="https://t.me/MrROBOTcommunityRUS">
+				<img src="https://neo19867.github.io/Keys002/001.webp" alt="Join Us">
+				<p>MrROBOT Community</p>
+				</a>
+		</div>
+<!-- Элемент для отображения черного экрана с надписью -->
+<div id="blackScreen">
+    <div id="messageContainer">
+        <p id="messageText">В доступе отказано / Access denied</p>
+        <!-- Кнопка "Получить доступ" -->
+        <a id="accessButton" href="https://t.me/MrROBOT_helper_bot" class="button">Получить доступ / Get access</a>
+    </div>
+</div>
+
+        </div>
+
+        <div class="hidden" id="keyCountGroup">
+            <label for="keyCountSelect">Select Number of Keys:</label>
+            <div id="keyCountSelect" class="key-slider">
+                <input type="range" min="10" max="100" value="10" id="keyRange">
+                <span id="keyValue">10</span>
+            </div>
+        </div>
+        <button id="startBtn" class="button hidden">Generate Keys</button>
+
+        <div id="progressContainer" class="hidden">
+            <div class="progress-bar">
+                <div id="progressBar" data-progress="0"></div>
+            </div>
+            <p id="progressText">0%</p>
+            <p id="progressLog">Wake up...</p>
+        </div>
+
+        <div id="keyContainer" class="hidden">
+            <h2 id="generatedKeysTitle" class="hidden">Generated Keys</h2>
+            <div id="keysList"></div>
+            <button id="copyAllBtn" class="button hidden">Copy All Keys</button>
+        </div>
+
+        <p id="keyCountLabel">Trying to get keys:</p>
+
+        <p id="copyStatus" class="hidden">Keys copied to clipboard!</p>
+        
+        <div class="footer">
+            <p>Matrix has you...</p>
+            <a id="sourceCode" href="https://t.me/MrROBOT_helper_bot" class="button">Telegram</a>
+            <button id="restartBtn" class="restart-button" onclick="window.location.reload();">RESTART</button>
+        </div>
+    </div>
+    <<!-- Подключение Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключение SQL.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    
+    <script src="script1.js"></script>;
+    <script src="script.js"></script>
+</body>
+</html>

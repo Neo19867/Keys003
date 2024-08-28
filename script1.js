@@ -1,0 +1,56 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    // Проверяем инициализацию Telegram Web App SDK
+    if (window.Telegram && window.Telegram.WebApp) {
+        // Получаем userId из Telegram Web App
+        const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
+
+        console.log("User ID from Telegram:", userId); // Выводим userId в консоль для отладки
+
+        // Проверка наличия userId
+        if (!userId) {
+            console.log("User ID not found, redirecting to bot...");
+            window.location.replace("https://t.me/TestKeys002bot");
+            return;
+        }
+
+        // Загрузка базы данных
+        const response = await fetch('https://keys002.pages.dev/userp.db'); // Убедитесь, что путь правильный
+        if (!response.ok) {
+            console.log("Failed to load database, redirecting to bot...");
+            window.location.replace("https://t.me/TestKeys002bot");
+            return;
+        }
+
+        const buffer = await response.arrayBuffer();
+
+        // Подключение к базе данных SQLite
+        const SQL = await initSqlJs({locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`});
+        const db = new SQL.Database(new Uint8Array(buffer));
+
+        // Проверка userId в базе данных
+        const stmt = db.prepare("SELECT COUNT(*) AS count FROM allowed_users WHERE user_id = ?");
+        stmt.bind([String(userId)]);
+
+        let isAllowed = false;
+        while (stmt.step()) {
+            const row = stmt.getAsObject();
+            isAllowed = row.count > 0;
+        }
+        stmt.free();
+        
+        if (isAllowed) {
+            console.log("User is allowed, enabling11 ...");
+            blackScreen.style.display = 'none';
+        }    else {
+                document.getElementById('blackScreen').classList.remove('hidden');
+                console.log("User is not allowed, enabling1 ...");
+            initGame();
+            
+        }
+    } 
+
+    function initGame() {
+        // Ваша логика игры, которая активируется для разрешенных пользователей
+        console.log('Game features initialized');
+    }
+});

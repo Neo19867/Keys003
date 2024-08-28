@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster Key Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <style>
+        /* Добавьте стили для ссылки, чтобы она выглядела как кнопка */
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hamster Key Generator</h1>
+        <div id="gameSelectContainer" class="grid-container">
+            <div class="game-option" data-game="9">
+                <img src="https://cdn.hamsterkombat.io/mud_racing/image.webp" alt="Mud Racing">
+                <p>Mud Racing</p>
+            </div>
+            <div class="game-option" data-game="8">
+                <img src="https://cdn.hamsterkombat.io/mow_trim/image.webp" alt="Mow and Trim">
+                <p>Mow and Trim</p>
+            </div>
+            <div class="game-option" data-game="7">
+                <img src="https://cdn.hamsterkombat.io/polysphere/image.webp" alt="Polysphere">
+                <p>Polysphere</p>
+            </div>
+            <div class="game-option" data-game="6">
+                <img src="https://cdn.hamsterkombat.io/twerk/image.webp" alt="Twerk Race 3D">
+                <p>Twerk Race 3D</p>
+            </div>
+            <div class="game-option" data-game="5">
+                <img src="https://cdn.hamsterkombat.io/merge_away/image.webp" alt="Merge Away">
+                <p>Merge Away</p>
+            </div>
+            <div class="game-option" data-game="3">
+                <img src="https://cdn.hamsterkombat.io/my_clone_army/image.webp" alt="My Clone Army">
+                <p>My Clone Army</p>
+            </div>
+            <div class="game-option" data-game="2">
+                <img src="https://cdn.hamsterkombat.io/chain_cube/image.webp" alt="Chain Cube 2048">
+                <p>Chain Cube 2048</p>
+            </div>
+            <div class="game-option" data-game="4">
+                <img src="https://cdn.hamsterkombat.io/train_miner/image.webp" alt="Train Miner">
+                <p>Train Miner</p>
+            </div>
+            <div class="game-option" data-game="1">
+                <img src="https://cdn.hamsterkombat.io/bikeride/image.webp" alt="Bike Ride 3D">
+                <p>Bike Ride 3D</p>
+            </div>
+        </div>
+
+        <div class="form-group hidden" id="keyCountGroup">
+            <label for="keyCountSelect">Select Number of Keys:</label>
+            <div id="keyCountSelect" class="key-slider">
+                <input type="range" min="1" max="10" value="1" id="keyRange">
+                <span id="keyValue">1</span>
+            </div>
+        </div>
+        <button id="startBtn" class="hidden">Generate Keys</button>
+
+        <div id="progressContainer" class="hidden">
+            <div class="progress-bar">
+                <div id="progressBar"></div>
+            </div>
+            <p id="progressText">0%</p>
+            <p id="progressLog">Starting...</p>
+        </div>
+
+        <div id="keyContainer" class="hidden">
+            <h2 id="generatedKeysTitle" class="hidden">Generated Keys</h2>
+            <div id="keysList"></div>
+            <button id="copyAllBtn" class="hidden">Copy All Keys</button>
+        </div>
+
+        <p id="keyCountLabel">Number of keys:</p>
+
+        <button id="generateMoreBtn" class="hidden">Generate More Keys</button>
+        <p id="copyStatus" class="hidden">Keys copied to clipboard!</p>
+        
+        <div class="footer">
+            <p>Disclaimer: This tool is for educational purposes only. Use responsibly.</p>
+            <a id="sourceCode" href="https://t.me/cryptomigos" class="button">Telegram</a>
+        </div>
+    </div>
+
+    <<!-- Подключение Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключение SQL.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Проверяем инициализацию Telegram Web App SDK
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Получаем userId из Telegram Web App
+                const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
+
+                console.log("User ID from Telegram:", userId); // Выводим userId в консоль для отладки
+
+                // Проверка наличия userId
+                if (!userId) {
+                    console.log("User ID not found, redirecting to bot...");
+                    window.location.replace("https://t.me/Key_hamster_gen_bot");
+                    return;
+                }
+
+                // Загрузка базы данных
+                const response = await fetch('https://keys002.vercel.app/userp.db'); // Убедитесь, что путь правильный
+                if (!response.ok) {
+                    console.log("Failed to load database, redirecting to bot...");
+                    window.location.replace("https://t.me/Key_hamster_gen_bot");
+                    return;
+                }
+
+                const buffer = await response.arrayBuffer();
+
+                // Подключение к базе данных SQLite
+                const SQL = await initSqlJs({locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`});
+                const db = new SQL.Database(new Uint8Array(buffer));
+
+                // Проверка userId в базе данных
+                const stmt = db.prepare("SELECT COUNT(*) AS count FROM users WHERE user_id = ?");
+                stmt.bind([String(userId)]);
+
+                let isAllowed = false;
+                while (stmt.step()) {
+                    const row = stmt.getAsObject();
+                    isAllowed = row.count > 0;
+                }
+                stmt.free();
+
+                if (isAllowed) {
+                    console.log("User is allowed, enabling features...");
+                    initGame();
+                } else {
+                    console.log("User is not allowed, redirecting...");
+                    window.location.replace("https://t.me/Key_hamster_gen_bot");
+                }
+            } else {
+                console.log("Telegram Web App SDK not available, redirecting...");
+                window.location.replace("https://t.me/Key_hamster_gen_bot");
+            }
+
+            function initGame() {
+                // Ваша логика игры, которая активируется для разрешенных пользователей
+                console.log('Game features initialized');
+            }
+        });
+    </script>
+	<script src="script.js"></script>
+</body>
+</html>
