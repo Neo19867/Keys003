@@ -41,7 +41,13 @@ async def check_users_and_transfer(bot):
     logger.info("Запуск проверки подписки всех пользователей из users.db...")
 
     async with aiosqlite.connect('users.db') as users_db:
+        # Получаем общее количество пользователей для подсчета оставшихся
+        async with users_db.execute('SELECT COUNT(*) FROM users') as count_cursor:
+            total_users = await count_cursor.fetchone()
+            total_users = total_users[0]
+
         async with users_db.execute('SELECT user_id FROM users') as cursor:
+            remaining_users = total_users
             async for row in cursor:
                 user_id = row[0]
                 unsubscribed_channels = await get_unsubscribed_channels(bot, user_id)
@@ -50,6 +56,10 @@ async def check_users_and_transfer(bot):
                     await add_user_to_allowed(user_id)
                 else:
                     logger.info(f"{Fore.RED}Пользователь с ID: {user_id} не подписан на все каналы и не будет перенесен.")
+
+                # Уменьшаем количество оставшихся пользователей и выводим его
+                remaining_users -= 1
+                logger.info(f"{Fore.BLUE}Осталось проверить {remaining_users} из {total_users} пользователей.")
 
 # Основная функция
 async def main():
