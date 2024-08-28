@@ -11,10 +11,10 @@ init(autoreset=True)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-API_TOKEN = '7009452109:AAEcriAYDYWiIInZMrRXtr_C2FeE60AJ-dM'
+API_TOKEN = '7343786423:AAHB-ET104-F1bf_t0FZz6Klf6yL1Q2dnpU'
 
 # Список каналов для проверки подписки
-channels = ["@gems_project", "@cryptomigos"]  # Замените на свои каналы
+channels = ["@MrROBOTcommunityRUS", "@combohamsterdaiIy"]  # Замените на свои каналы
 
 # Функция проверки подписки на каналы и возврат только тех, на которые не подписан
 async def get_unsubscribed_channels(bot, user_id):
