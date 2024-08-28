@@ -169,7 +169,7 @@ async def send_welcome(message: types.Message):
 # Запуск планировщика для периодической проверки подписки
 async def on_startup():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(check_all_users, IntervalTrigger(minutes=CHECK_INTERVAL_MINUTES))
+    scheduler.add_job(check_all_users, IntervalTrigger(minutes=CHECK_INTERVAL_MINUTES), coalesce=True, max_instances=1)
     scheduler.start()
 
     await init_db()
