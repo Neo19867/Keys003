@@ -51,6 +51,20 @@ async def init_db():
     await userp_db.commit()
 
     logger.info("Базы данных инициализированы.")
+    await log_db_counts()
+
+# Логирование количества пользователей в базах данных
+async def log_db_counts():
+    try:
+        async with users_db.execute('SELECT COUNT(*) FROM all_users') as cursor:
+            total_users = await cursor.fetchone()
+            logger.info(f"{Fore.CYAN}Всего пользователей в базе данных users.db: {total_users[0]}")
+
+        async with userp_db.execute('SELECT COUNT(*) FROM allowed_users') as cursor:
+            allowed_users = await cursor.fetchone()
+            logger.info(f"{Fore.CYAN}Всего пользователей в базе данных userp.db: {allowed_users[0]}")
+    except Exception as e:
+        logger.error(f"Ошибка при подсчете пользователей: {e}")
 
 # Функция добавления пользователя в users.db с проверкой на существование
 async def add_user_to_all(user_id):
@@ -67,7 +81,6 @@ async def add_user_to_all(user_id):
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при добавлении пользователя в all_users: {e}")
 
-
 # Функция добавления пользователя в userp.db (если подписан) с проверкой на существование
 async def add_user_to_allowed(user_id):
     try:
@@ -82,7 +95,6 @@ async def add_user_to_allowed(user_id):
             logger.info(f"{Fore.GREEN}Пользователь с ID: {user_id} уже существует в базе данных userp.db.")
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при добавлении пользователя в allowed_users: {e}")
-
 
 # Функция удаления пользователя из userp.db
 async def remove_user_from_allowed(user_id):
@@ -118,6 +130,7 @@ async def check_all_users():
                     await remove_user_from_allowed(user_id)
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при проверке всех пользователей: {e}")
+    await log_db_counts()
 
 # Обработка команды /start
 @dp.message(Command(commands=["start"]))
