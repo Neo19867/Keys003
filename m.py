@@ -51,19 +51,18 @@ async def init_db():
     await userp_db.commit()
 
     logger.info("Базы данных инициализированы.")
-    await log_db_counts()
 
-# Логирование количества пользователей в базах данных
-async def log_db_counts():
+# Функция для логирования количества пользователей в базах данных
+async def log_user_counts():
     try:
         async with users_db.execute('SELECT COUNT(*) FROM all_users') as cursor:
-            total_users = await cursor.fetchone()
-            logger.info(f"{Fore.CYAN}Всего пользователей в базе данных users.db: {total_users[0]}")
-
+            all_users_count = await cursor.fetchone()
         async with userp_db.execute('SELECT COUNT(*) FROM allowed_users') as cursor:
-            allowed_users = await cursor.fetchone()
-            logger.info(f"{Fore.CYAN}Всего пользователей в базе данных userp.db: {allowed_users[0]}")
-    except Exception as e:
+            allowed_users_count = await cursor.fetchone()
+        
+        logger.info(f"{Fore.CYAN}Количество пользователей в all_users: {all_users_count[0]}")
+        logger.info(f"{Fore.CYAN}Количество пользователей в allowed_users: {allowed_users_count[0]}")
+    except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при подсчете пользователей: {e}")
 
 # Функция добавления пользователя в users.db с проверкой на существование
@@ -81,6 +80,9 @@ async def add_user_to_all(user_id):
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при добавлении пользователя в all_users: {e}")
 
+    # Логируем количество пользователей в базах
+    await log_user_counts()
+
 # Функция добавления пользователя в userp.db (если подписан) с проверкой на существование
 async def add_user_to_allowed(user_id):
     try:
@@ -96,6 +98,9 @@ async def add_user_to_allowed(user_id):
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при добавлении пользователя в allowed_users: {e}")
 
+    # Логируем количество пользователей в базах
+    await log_user_counts()
+
 # Функция удаления пользователя из userp.db
 async def remove_user_from_allowed(user_id):
     try:
@@ -104,6 +109,9 @@ async def remove_user_from_allowed(user_id):
         logger.info(f"{Fore.RED}Пользователь с ID: {user_id} удален из базы данных userp.db.")
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при удалении пользователя из allowed_users: {e}")
+
+    # Логируем количество пользователей в базах
+    await log_user_counts()
 
 # Функция проверки подписки на каналы и возврат только тех, на которые не подписан
 async def get_unsubscribed_channels(user_id):
@@ -130,7 +138,6 @@ async def check_all_users():
                     await remove_user_from_allowed(user_id)
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при проверке всех пользователей: {e}")
-    await log_db_counts()
 
 # Обработка команды /start
 @dp.message(Command(commands=["start"]))
@@ -146,7 +153,7 @@ async def send_welcome(message: types.Message):
     # Проверяем подписку на каналы
     unsubscribed_channels = await get_unsubscribed_channels(user_id)
 
-    if unsubscribed_channels:
+    if (unsubscribed_channels):
         # Если пользователь не подписан на все каналы
         keyboard = InlineKeyboardBuilder()
         for channel in unsubscribed_channels:
