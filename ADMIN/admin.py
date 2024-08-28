@@ -21,12 +21,6 @@ logger = logging.getLogger(__name__)
 
 MAX_CONCURRENT_TASKS = 1
 
-def log_action(log_file, action):
-    log_entry = f"{datetime.now().isoformat()} - {action}"
-    logger.info(log_entry)
-    with open(log_file, 'a', encoding='utf-8') as f:
-        f.write(f"{log_entry}\n")
-
 def update_console_status(current, total, successful, errors, bot_name):
     sys.stdout.write(f"\r[{bot_name}] Пользователи: {current}/{total} | Успехи: {successful} | Ошибки: {errors}")
     sys.stdout.flush()
