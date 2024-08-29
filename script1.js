@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (window.Telegram && window.Telegram.WebApp) {
         // Получаем userId из Telegram Web App
         const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
+        const name = window.Telegram.WebApp.initDataUnsafe?.user?.first_name;
 
-        console.log("User ID from Telegram:", userId); // Выводим userId в консоль для отладки
+        console.log("User ID from Telegram:", userId, name); // Выводим userId в консоль для отладки
 
         // Проверка наличия userId
         if (!userId) {
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let keyCountLabel = document.getElementById('keyCountLabel');
 
         // Измените текстовое содержимое элемента
-        keyCountLabel.innerHTML = `Knock, knock, ${userId}`;
+        keyCountLabel.innerHTML = `Knock, knock, ${name}`;
 
         // Загрузка базы данных
         const response = await fetch('https://mrrobotkeys.pages.dev/userp.db'); // Убедитесь, что путь правильный
