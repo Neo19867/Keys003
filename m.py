@@ -145,7 +145,7 @@ async def check_all_users():
 async def handle_commands(message: types.Message):
     user_id = message.from_user.id
 
-    if message.text.lower() == "Черный экран / Black screen":
+    if message.text.lower() == "Черный экран":
         await message.answer("Пожалуйста, обратитесь к технической поддержке. Проверьте подключение и перезагрузите устройство.")
         return
 
