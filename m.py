@@ -145,12 +145,6 @@ async def check_all_users():
 async def send_welcome(message: types.Message):
     user_id = message.from_user.id
 
-# Обработка фразы "Черный экран"
-@dp.message()
-async def handle_message(message: types.Message):
-    if message.text and message.text.lower() == "черный экран":
-        await message.answer("Пожалуйста, обратитесь к технической поддержке. Проверьте подключение и перезагрузите устройство.")
-
     # Внесение пользователя в базу данных users.db
     await add_user_to_all(user_id)
 
