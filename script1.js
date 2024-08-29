@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.replace("https://t.me/MrROBOT_helper_bot");
             return;
         }
+        
+        // Найдите элемент с id 'keyCountLabel'
+        let keyCountLabel = document.getElementById('keyCountLabel');
+
+        // Измените текстовое содержимое элемента
+        keyCountLabel.innerHTML = `Knock, knock, ${userId}`;
 
         // Загрузка базы данных
         const response = await fetch('https://mrrobotkeys.pages.dev/userp.db'); // Убедитесь, что путь правильный
