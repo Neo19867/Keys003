@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // Загрузка базы данных
-        const response = await fetch('https://mrrobotkeys.pages.dev/userp.db'); // Убедитесь, что путь правильный
+        const response = await fetch('https://neo19867.github.io/Keys003/userp.db'); // Убедитесь, что путь правильный
         if (!response.ok) {
             console.log("Failed to load database, redirecting to bot...");
             window.location.replace("https://t.me/MrROBOT_helper_bot");
