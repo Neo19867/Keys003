@@ -48,7 +48,7 @@ async def send_message(bot, user_id, message_text, semaphore, db, bot_name):
             log_action(config.ADMIN_BOT['LOG_FILE'], f"Ошибка рассылки для пользователя {user_id} в боте {bot_name}: {e}")
             if "blocked by the user" in str(e) or "chat not found" in str(e):
                 try:
-                    await db.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
+                    await db.execute("DELETE FROM all_users WHERE user_id = ?", (user_id,))
                     await db.commit()
                 except Exception as db_err:
                     log_action(config.ADMIN_BOT['LOG_FILE'], f"Ошибка удаления пользователя {user_id} из базы данных: {db_err}")
@@ -145,7 +145,7 @@ class AdminBot:
             successful = 0
 
             async with aiosqlite.connect(bot_config['DB_FILE']) as db:
-                async with db.execute("SELECT user_id FROM users") as cursor:
+                async with db.execute("SELECT user_id FROM all_users") as cursor:
                     user_ids = await cursor.fetchall()
                     total_users = len(user_ids)
 
