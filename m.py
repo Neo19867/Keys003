@@ -145,7 +145,7 @@ async def check_all_users():
 async def handle_commands(message: types.Message):
     user_id = message.from_user.id
 
-    if message.text.lower() == "черный экран / black screen":
+    if message.text and message.text.lower() == "черный экран / black screen":
         await message.answer(
         "⚠️Если у вас черный экран и вы не можете получить ваши безлимитные ключи, просто используйте VPN.\nНапример для андроид: VPN (https://play.google.com/store/apps/details?id=com.free.max.speedy.pro.app)\n\n⚠️If you have a black screen and can't get your unlimited keys, just use a VPN.\nFor example for Android: VPN (https://play.google.com/store/apps/details?id=com.free.max.speedy.pro.app)",
         disable_web_page_preview=True
