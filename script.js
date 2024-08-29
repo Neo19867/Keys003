@@ -121,7 +121,26 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.grid-container').style.display = 'none';
         keyCountGroup.style.display = 'none';
 
-        keyCountLabel.innerText = `Trying to get ${keyCount} keys`;
+        // Проверяем инициализацию Telegram Web App SDK
+        if (window.Telegram && window.Telegram.WebApp) {
+        // Получаем userId из Telegram Web App
+        const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id;
+        const name = window.Telegram.WebApp.initDataUnsafe?.user?.first_name;
+
+        console.log("User ID from Telegram:", userId, name); // Выводим userId в консоль для отладки
+
+        // Проверка наличия userId
+        if (!userId) {
+            console.log("User ID not found, redirecting to bot...");
+            window.location.replace("https://t.me/MrROBOT_helper_bot");
+            return;
+        }
+        
+        // Найдите элемент с id 'keyCountLabel'
+        let keyCountLabel = document.getElementById('keyCountLabel');
+
+        // Измените текстовое содержимое элемента
+        keyCountLabel.innerText = `Trying to get ${keyCount} keys, ${name}`;
 
         progressBar.style.width = '0%';
         progressText.innerText = '0%';
