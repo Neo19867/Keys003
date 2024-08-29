@@ -139,11 +139,6 @@ async def check_all_users():
     except sqlite3.OperationalError as e:
         logger.error(f"Ошибка при проверке всех пользователей: {e}")
 
-# Обработка фразы "Черный экран"
-@dp.message(Text(equals="Черный экран / Black screen", ignore_case=True))
-async def handle_black_screen(message: types.Message):
-    await message.answer("Пожалуйста, обратитесь к технической поддержке. Проверьте подключение и перезагрузите устройство.")
-
 # Обработка команды /start
 @dp.message(Command(commands=["start"]))
 @dp.message()
