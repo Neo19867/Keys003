@@ -162,7 +162,7 @@ async def send_welcome(message: types.Message):
         # Создаем обычную клавиатуру
         reply_kb = ReplyKeyboardMarkup(
             keyboard=[
-                [KeyboardButton(text="Проверить доступ / Check access")]
+                [KeyboardButton(text="Проверить доступ / Check access")],
                 [KeyboardButton(text="Черный экран / Black screen")]
             ],
             resize_keyboard=True
@@ -176,7 +176,7 @@ async def send_welcome(message: types.Message):
         # Создаем обычную клавиатуру
         reply_kb = ReplyKeyboardMarkup(
             keyboard=[
-                [KeyboardButton(text="Проверить доступ / Check access")]
+                [KeyboardButton(text="Проверить доступ / Check access")],
                 [KeyboardButton(text="Черный экран / Black screen")]
             ],
             resize_keyboard=True
