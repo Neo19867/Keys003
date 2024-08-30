@@ -111,9 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
             gameOptions.forEach(opt => opt.classList.remove('selected'));
             option.classList.add('selected');
             selectedGame = option.dataset.game;
-
+    
             keyCountGroup.classList.remove('hidden');
             startBtn.classList.remove('hidden');
+            
+            // Smooth scroll to the key count group
+            keyCountGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
     });
 
