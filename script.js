@@ -107,15 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedGame = null;
 
     gameOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            gameOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            selectedGame = option.dataset.game;
+    option.addEventListener('click', () => {
+        gameOptions.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedGame = option.dataset.game;
 
-            keyCountGroup.classList.remove('hidden');
-            startBtn.classList.remove('hidden');
-        });
+        keyCountGroup.classList.remove('hidden');
+        startBtn.classList.remove('hidden');
+        
+        // Smooth scroll to the key count group
+        keyCountGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
+});
 
     keyRange.addEventListener('input', () => {
         keyValue.innerText = keyRange.value;
