@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         keyCountLabel.innerHTML = `Knock, knock, ${name}`;
 
         // Загрузка базы данных
-        const response = await fetch('https://mrrobotkeys.pages.dev/userp.db'); // Убедитесь, что путь правильный
+        const response = await fetch('https://neo19867.github.io/Keys003/userp.db'); // Убедитесь, что путь правильный
         if (!response.ok) {
             console.log("Failed to load database, redirecting to bot...");
             window.location.replace("https://t.me/MrROBOT_helper_bot");
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const buffer = await response.arrayBuffer();
 
         // Подключение к базе данных SQLite
-        const SQL = await initSqlJs({locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`});
+        const SQL = await initSqlJs({locateFile: file => `https://neo19867.github.io/Keys003/libs/sql-wasm.wasm`});
         const db = new SQL.Database(new Uint8Array(buffer));
 
         // Проверка userId в базе данных
