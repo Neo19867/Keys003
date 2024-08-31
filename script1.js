@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const buffer = await response.arrayBuffer();
 
         // Подключение к базе данных SQLite
-        const SQL = await initSqlJs({locateFile: file => `https://neo19867.github.io/Keys003/sql-wasm.wasm`});
+        const SQL = await initSqlJs({locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.6.2/dist/sql-wasm.wasm`});
+
 
         const db = new SQL.Database(new Uint8Array(buffer));
 
