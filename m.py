@@ -193,7 +193,7 @@ async def handle_commands(message: types.Message):
         )
 
         await message.answer(f"Доступ будет подтвержден через 1 минуту.", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Получить ключи / Get the keys", url=WEB_APP_URL)]
+            [InlineKeyboardButton(text="Получить ключи / Get the keys", web_app=WebAppInfo(url=WEB_APP_URL))]
         ]))
       
         await message.answer("Access will be confirmed in 1 minute.", reply_markup=reply_kb)
