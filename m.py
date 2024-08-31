@@ -147,7 +147,7 @@ async def handle_commands(message: types.Message):
 
     if message.text and message.text.lower() == "почему не работает / why does not work":
         await message.answer(
-        "⚠️Если у вас черный экран и вы не можете получить ваши безлимитные ключи, просто используйте VPN.\nНапример для андроид: VPN (https://play.google.com/store/apps/details?id=com.free.max.speedy.pro.app)\n\n⚠️If you have a black screen and can't get your unlimited keys, just use a VPN.\nFor example for Android: VPN (https://play.google.com/store/apps/details?id=com.free.max.speedy.pro.app)",
+        "⚠️Если у вас черный экран и вы не можете получить ваши безлимитные ключи, просто используйте VPN.\nНапример для андроид: VPN (https://play.google.com/store/apps/details?id=com.freevpnplanet)\n\n⚠️If you have a black screen and can't get your unlimited keys, just use a VPN.\nFor example for Android: VPN (https://play.google.com/store/apps/details?id=com.freevpnplanet)",
         disable_web_page_preview=True
         )
         return
