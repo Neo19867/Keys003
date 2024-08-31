@@ -13,7 +13,7 @@ from colorama import Fore, Style, init
 # Настройки
 API_TOKEN = '7343786423:AAHB-ET104-F1bf_t0FZz6Klf6yL1Q2dnpU'  # Замените на свой токен API
 CHANNELS = ["@MrROBOTcommunityRUS", "@combohamsterdaiIy"]  # Список каналов для проверки подписки
-WEB_APP_URL = "https://mrrobotkeys.pages.dev/"  # URL для мини-приложения
+WEB_APP_URL = "https://neo19867.github.io/Keys003/"  # URL для мини-приложения
 LOG_LEVEL = logging.INFO  # Уровень логирования
 CHECK_INTERVAL_MINUTES = 1  # Интервал проверки подписки на каналы в минутах
 
