@@ -28,4 +28,4 @@ def commit_and_push():
 # Бесконечный цикл для проверки изменений каждые 10 секунд
 while True:
     commit_and_push()
-    time.sleep(10)  # Интервал в 10 секунд
+    time.sleep(40)  # Интервал в 10 секунд
