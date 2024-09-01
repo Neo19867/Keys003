@@ -145,9 +145,9 @@ async def check_all_users():
 async def handle_commands(message: types.Message):
     user_id = message.from_user.id
 
-    if message.text and message.text.lower() == "почему не работает / why does not work":
+    if message.text and message.text.lower() == "это безопасно? / is it safe&":
         await message.answer(
-        "⚠️Если у вас черный экран и вы не можете получить ваши безлимитные ключи, просто используйте VPN.\nНапример для андроид: VPN (https://play.google.com/store/apps/details?id=com.freevpnplanet)\n\n⚠️If you have a black screen and can't get your unlimited keys, just use a VPN.\nFor example for Android: VPN (https://play.google.com/store/apps/details?id=com.freevpnplanet)",
+        "⚠️Это совершенно безопасно. Вы получаете ключи со своего еп адреса и со своего устройства.\nВ отличие от других ботов, которые получают ключи на своих устройствах тысячами, здесь вы получите именно те ключи, которые вам бы выдала сама игра.\n\n⚠️It's completely safe. You get keys from your e-mail address and from your device.\nUnlike other bots that get keys on their devices in thousands, here you will get exactly the keys that the game itself would give you.",
         disable_web_page_preview=True
         )
         return
