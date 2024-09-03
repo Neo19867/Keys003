@@ -149,9 +149,9 @@ async def handle_commands(message: types.Message):
         await message.answer(
             "Ссылка на таблицу: [Google Sheets](https://docs.google.com/spreadsheets/d/1mVCjBu9-HfKn3l7UtoWAT37PDYoq757aQg0-lMCQe9w)",
             disable_web_page_preview=True,
-         parse_mode="Markdown"
+            parse_mode="Markdown"
         )
-    return
+        return
 
 
 
