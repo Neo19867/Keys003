@@ -175,7 +175,7 @@ async def handle_commands(message: types.Message):
         reply_kb = ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="Проверить доступ / Check access")],
-                [KeyboardButton(text="это безопасно? / is it safe?")]
+                [KeyboardButton(text="таблица прокачки hamster")]
             ],
             resize_keyboard=True
         )
@@ -189,7 +189,7 @@ async def handle_commands(message: types.Message):
         reply_kb = ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="Проверить доступ / Check access")],
-                [KeyboardButton(text="это безопасно? / is it safe?")]
+                [KeyboardButton(text="таблица прокачки hamster")]
             ],
             resize_keyboard=True
         )
