@@ -145,12 +145,14 @@ async def check_all_users():
 async def handle_commands(message: types.Message):
     user_id = message.from_user.id
 
-    if message.text and message.text.lower() == "это безопасно? / is it safe?":
+    if message.text and message.text.lower() == "таблица прокачки hamster":
         await message.answer(
-        "⚠️Это совершенно безопасно. Вы получаете ключи со своего ip адреса и со своего устройства.\nВ отличие от других ботов, которые получают ключи на своих устройствах тысячами, здесь вы получите именно те ключи, которые вам бы выдала сама игра.\n\n⚠️It's completely safe. You get keys from your ip address and from your device.\nUnlike other bots that get keys on their devices in thousands, here you will get exactly the keys that the game itself would give you.",
-        disable_web_page_preview=True
+            "Ссылка на таблицу: [Google Sheets](https://docs.google.com/spreadsheets/d/1mVCjBu9-HfKn3l7UtoWAT37PDYoq757aQg0-lMCQe9w)",
+            disable_web_page_preview=True,
+         parse_mode="Markdown"
         )
-        return
+    return
+
 
 
 
