@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: 'Fluff Crusade',
             appToken: '112887b0-a8af-4eb2-ac63-d82df78283d9',
             promoId: '112887b0-a8af-4eb2-ac63-d82df78283d9',
-            timing: 20000, // 40 seconds
+            timing: 40000, // 40 seconds
             attempts: 30,
         }
     };
