@@ -5,7 +5,7 @@ BOTS = {
         'TOKEN': '7343786423:AAHB-ET104-F1bf_t0FZz6Klf6yL1Q2dnpU',
         'DB_FILE': 'users.db',
         'LOG_FILE': 'bot1_actions.log',
-        'CHANNELS': ['@MrROBOTcommunityRUS', '@combohamsterdaiIy','@hamster_free_key','@cryptomigos'],
+        'CHANNELS': ['@MrROBOTcommunityRUS', '@combohamsterdaiIy'],
     }
 }
 
