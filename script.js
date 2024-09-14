@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: 'Hide Ball',
             appToken: '4bf4966c-4d22-439b-8ff2-dc5ebca1a600',
             promoId: '4bf4966c-4d22-439b-8ff2-dc5ebca1a600',
-            timing: 40000, // 30 seconds
+            timing: 20000, // 30 seconds
             attempts: 30,
         }
     };
