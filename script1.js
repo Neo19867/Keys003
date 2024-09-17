@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("User is allowed, enabling11 ...");
             blackScreen.style.display = 'none';
         }    else {
-                document.getElementById('blackScreen').classList.remove('hidden');
+                //document.getElementById('blackScreen').classList.remove('hidden');
                 console.log("User is not allowed, enabling1 ...");
-                blackScreen.style.display = 'none';
+                blackScreen.style.display = 'none'; //убрать для проверки подписки
             initGame();
             
         }
