@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }    else {
                 document.getElementById('blackScreen').classList.remove('hidden');
                 console.log("User is not allowed, enabling1 ...");
+                blackScreen.style.display = 'none';
             initGame();
             
         }
