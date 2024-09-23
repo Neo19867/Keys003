@@ -147,7 +147,7 @@ async def handle_commands(message: types.Message):
 
     if message.text and message.text.lower() == "таблица прокачки hamster":
         await message.answer(
-            "Ссылка на таблицу: [Прокачка Хомяка](https://docs.google.com/spreadsheets/d/1mVCjBu9-HfKn3l7UtoWAT37PDYoq757aQg0-lMCQe9w)",
+            "Ссылка на таблицу: [Прокачка #BeeHarvest](https://docs.google.com/spreadsheets/d/1-c355bOKXP2fthlmDevGTvHeB_eEIxxV9SnumjUqnzI/edit?gid=490232599#gid=490232599)",
             disable_web_page_preview=True,
             parse_mode="Markdown"
         )
