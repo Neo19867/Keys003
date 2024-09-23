@@ -145,7 +145,7 @@ async def check_all_users():
 async def handle_commands(message: types.Message):
     user_id = message.from_user.id
 
-    if message.text and message.text.lower() == "таблица прокачки hamster":
+    if message.text and message.text.lower() == "таблица прокачки #BeeHarvest":
         await message.answer(
             "Ссылка на таблицу: [Прокачка #BeeHarvest](https://docs.google.com/spreadsheets/d/1-c355bOKXP2fthlmDevGTvHeB_eEIxxV9SnumjUqnzI/edit?gid=490232599#gid=490232599)",
             disable_web_page_preview=True,
